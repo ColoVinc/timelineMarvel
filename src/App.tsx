@@ -175,7 +175,7 @@ export default function App() {
         <Minimap groups={groups} view={view} scrollerRef={scrollerRef} />
 
         {view === 'chrono' && (
-          <div className="flex flex-none items-center gap-2 border-t border-white/10 bg-black/30 px-[22px] py-2 text-[12px] text-muted">
+          <div className="flex flex-none items-center gap-2 border-t border-white/10 bg-black/30 px-5.5 py-2 text-[12px] text-muted">
             <span className="text-red">ⓘ</span> Ordinamento interno alla storia — ricostruzione
             curata, non ufficiale.
           </div>
