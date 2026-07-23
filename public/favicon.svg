@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Scudo">
+  <!-- Anelli concentrici dello scudo -->
+  <circle cx="32" cy="32" r="32" fill="#E01B24"/>
+  <circle cx="32" cy="32" r="25" fill="#FFFFFF"/>
+  <circle cx="32" cy="32" r="18.5" fill="#E01B24"/>
+  <circle cx="32" cy="32" r="12" fill="#14357F"/>
+  <!-- Stella centrale a cinque punte -->
+  <polygon fill="#FFFFFF" points="
+    32,22.8 34.17,29.01 40.75,29.16 35.52,33.14 37.41,39.44
+    32,35.7 26.59,39.44 28.48,33.14 23.25,29.16 29.83,29.01"/>
+</svg>

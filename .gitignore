@@ -1,0 +1,11 @@
+node_modules
+dist
+.DS_Store
+*.log
+
+# Impostazioni locali di Claude Code (possono contenere segreti, es. la API key TMDB)
+.claude/settings.local.json
+
+# Audio protetto da copyright (theme song) — da tenere solo in locale
+public/theme.mp3
+*.mp3

@@ -1,0 +1,15 @@
+{
+  "name": "mcu-timeline",
+  "version": "0.1.0",
+  "description": "Timeline interattiva stile Marvel Studios per film, serie e animazioni MCU",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "posters": "node scripts/fetch-posters.mjs"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
