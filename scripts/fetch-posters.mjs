@@ -11,10 +11,12 @@
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import { ITEMS } from '../src/data/mcu.js';
+// Node 24 esegue i .ts strippando i tipi al volo, quindi possiamo importare
+// direttamente il dataset TypeScript.
+import { ITEMS } from '../src/data/mcu.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT = resolve(__dirname, '../src/data/posters.generated.js');
+const OUT = resolve(__dirname, '../src/data/posters.generated.ts');
 
 const KEY = (process.env.TMDB_KEY || process.argv[2] || '').trim();
 if (!KEY) {
@@ -80,8 +82,8 @@ const body = `// ─────────────────────
 //  Per rigenerarlo:  TMDB_KEY=la_tua_chiave npm run posters
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const POSTER_PATHS = ${JSON.stringify(paths, null, 2)};
+export const POSTER_PATHS: Record<string, string> = ${JSON.stringify(paths, null, 2)};
 `;
 
 writeFileSync(OUT, body);
-console.log(`\n✅  Salvati ${ok} poster (${miss} mancanti) in src/data/posters.generated.js\n`);
+console.log(`\n✅  Salvati ${ok} poster (${miss} mancanti) in src/data/posters.generated.ts\n`);

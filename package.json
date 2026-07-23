@@ -1,15 +1,25 @@
 {
   "name": "mcu-timeline",
-  "version": "0.1.0",
-  "description": "Timeline interattiva stile Marvel Studios per film, serie e animazioni MCU",
+  "version": "0.2.0",
+  "description": "Timeline interattiva stile Marvel Studios (React + TypeScript + Tailwind)",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b && vite build",
     "preview": "vite preview",
     "posters": "node scripts/fetch-posters.mjs"
   },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
   "devDependencies": {
-    "vite": "^5.4.0"
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
   }
 }

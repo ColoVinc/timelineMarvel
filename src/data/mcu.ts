@@ -22,12 +22,14 @@
 //  ragionata, non una verità assoluta. Vedi la nota "?" nell'interfaccia.
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const SAGAS = {
+import type { McuItem, MediaType, PhaseInfo, SagaId, SagaInfo, TypeInfo } from '../types';
+
+export const SAGAS: Record<SagaId, SagaInfo> = {
   infinity: { id: 'infinity', name: 'The Infinity Saga', phases: [1, 2, 3] },
   multiverse: { id: 'multiverse', name: 'The Multiverse Saga', phases: [4, 5, 6] },
 };
 
-export const PHASES = {
+export const PHASES: Record<number, PhaseInfo> = {
   1: { n: 1, name: 'Phase One', saga: 'infinity', color: '#c9a227' },
   2: { n: 2, name: 'Phase Two', saga: 'infinity', color: '#d4571f' },
   3: { n: 3, name: 'Phase Three', saga: 'infinity', color: '#b11313' },
@@ -36,14 +38,14 @@ export const PHASES = {
   6: { n: 6, name: 'Phase Six', saga: 'multiverse', color: '#12a594' },
 };
 
-export const TYPES = {
+export const TYPES: Record<MediaType, TypeInfo> = {
   film: { id: 'film', label: 'Film', icon: '🎬' },
   series: { id: 'series', label: 'Serie TV', icon: '📺' },
   animation: { id: 'animation', label: 'Animazione', icon: '✷' },
   special: { id: 'special', label: 'Speciale', icon: '★' },
 };
 
-export const ITEMS = [
+export const ITEMS: McuItem[] = [
   // ── PHASE 1 ────────────────────────────────────────────────────────────────
   { id: 'iron-man', title: 'Iron Man', type: 'film', saga: 'infinity', phase: 1,
     release: '2008-05-02', tmdbType: 'movie', year: 2008, chrono: 300, era: '2010',

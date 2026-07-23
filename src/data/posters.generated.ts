@@ -8,7 +8,7 @@
 //  Per rigenerarlo:  TMDB_KEY=la_tua_chiave npm run posters
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const POSTER_PATHS = {
+export const POSTER_PATHS: Record<string, string> = {
   "iron-man": "/xWXuFC4FY0inQ1QsnDrE7fGwFEd.jpg",
   "incredible-hulk": "/xaegYELleYoOMH0a8SMQ4nQnhSm.jpg",
   "iron-man-2": "/lWSyc4wVNQyjlCtcZSIDauJTInI.jpg",
