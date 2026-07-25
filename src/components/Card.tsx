@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
+import { useRef, type CSSProperties, type PointerEvent } from 'react';
 import { PHASES, TYPES } from '../data/mcu';
-import { resolvePoster } from '../lib/posters';
+import { posterUrl } from '../lib/posters';
 import { formatDate, yearOf } from '../lib/format';
 import type { McuItem, ViewMode } from '../types';
 
@@ -10,25 +10,15 @@ interface Props {
   item: McuItem;
   index: number;
   view: ViewMode;
-  posterVersion: number;
   onOpen: (item: McuItem) => void;
 }
 
-export function Card({ item, index, view, posterVersion, onOpen }: Props) {
+export function Card({ item, index, view, onOpen }: Props) {
   const above = index % 2 === 0;
   const color = PHASES[item.phase].color;
   const cardRef = useRef<HTMLDivElement>(null);
-  const [poster, setPoster] = useState<string | null>(null);
-
-  useEffect(() => {
-    let alive = true;
-    resolvePoster(item).then((url) => {
-      if (alive) setPoster(url);
-    });
-    return () => {
-      alive = false;
-    };
-  }, [item, posterVersion]);
+  const poster = posterUrl(item);
+  const t = TYPES[item.type];
 
   const onMove = (e: PointerEvent<HTMLDivElement>) => {
     if (REDUCED || !cardRef.current) return;
@@ -42,8 +32,6 @@ export function Card({ item, index, view, posterVersion, onOpen }: Props) {
     cardRef.current?.style.setProperty('--tilt-x', '0deg');
     cardRef.current?.style.setProperty('--tilt-y', '0deg');
   };
-
-  const t = TYPES[item.type];
 
   return (
     <article
@@ -66,8 +54,9 @@ export function Card({ item, index, view, posterVersion, onOpen }: Props) {
       <div className="card-wrap" onPointerMove={onMove} onPointerLeave={onLeave} onClick={() => onOpen(item)}>
         <div className="card" ref={cardRef}>
           <div className={`card__poster${poster ? ' has-img' : ''}`}>
-            {poster && <img src={poster} alt={item.title} className="card__img" />}
-            {!poster && (
+            {poster ? (
+              <img src={poster} alt={item.title} className="card__img" />
+            ) : (
               <div className="card__fallback">
                 <span className="card__fallback-type">{t.label}</span>
                 <span className="card__fallback-title">{item.title}</span>

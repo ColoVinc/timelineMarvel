@@ -14,7 +14,6 @@ interface Props {
   onQuery: (q: string) => void;
   audio: AudioControls;
   onAudioClick: () => void;
-  onOpenSettings: () => void;
 }
 
 const VIEWS: [ViewMode, string][] = [
@@ -156,20 +155,6 @@ export function Drawer(props: Props) {
               title="Volume"
               className="vol flex-1"
             />
-          </div>
-        </Field>
-
-        {/* Impostazioni */}
-        <Field label="Impostazioni">
-          <div className="flex items-center gap-2.5">
-            <button
-              onClick={props.onOpenSettings}
-              title="Impostazioni poster (TMDB)"
-              className="flex h-[38px] w-[38px] items-center justify-center rounded-full border border-white/10 bg-white/5 text-[16px] transition-transform duration-300 hover:rotate-90 hover:bg-white/10"
-            >
-              ⚙
-            </button>
-            <span className="text-[13px] text-ink">Poster (TMDB)</span>
           </div>
         </Field>
       </aside>

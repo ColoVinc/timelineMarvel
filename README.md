@@ -20,28 +20,22 @@ npm run preview  # anteprima della build
 
 ## Poster reali (TMDB)
 
-I poster ufficiali vengono da [The Movie Database](https://www.themoviedb.org).
-Le **immagini** TMDB sono pubbliche: serve una API key gratuita solo per *cercare*
-il percorso del poster, non per mostrarlo. Due modi:
+I poster vengono da [The Movie Database](https://www.themoviedb.org). Le **immagini**
+image.tmdb.org sono pubbliche: **a runtime non serve alcuna API key**. I percorsi dei
+poster sono già "cotti" nel dataset (`src/data/posters.generated.ts`), quindi ogni
+visitatore vede subito i poster.
 
-### A) "Cuocere" i poster nel progetto (consigliato — poi niente key per nessuno)
+Per (ri)generarli — utile dopo aver aggiunto nuovi titoli — serve una API key gratuita
+TMDB, usata **solo in locale** dallo script, mai salvata nel file:
 
 ```bash
 TMDB_KEY=la_tua_chiave npm run posters
 ```
 
-Lo script cerca ogni titolo e salva i percorsi in `src/data/posters.generated.ts`.
-Da quel momento i poster si vedono **senza alcuna key a runtime**. La chiave è usata
-solo in locale e non viene mai salvata nel file.
+Un titolo senza poster salvato mostra una card stilizzata di fallback.
 
-### B) Inserire la key nell'app (al volo, per titolo)
-
-Apri il menù laterale (☰) → **Impostazioni** e incolla la chiave (v3 auth). Viene
-salvata solo nel tuo browser (localStorage). Utile per riempire eventuali poster
-mancanti dopo la generazione del punto A.
-
-Ordine di risoluzione poster: **percorso generato → cache locale → ricerca dal vivo**.
-Senza nulla di tutto ciò, l'app mostra card stilizzate.
+> Nota TMDB: usando le loro immagini va aggiunta un'attribuzione (es. nel footer):
+> "This product uses the TMDB API but is not endorsed or certified by TMDB". (TODO)
 
 ## Struttura
 

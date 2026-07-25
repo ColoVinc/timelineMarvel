@@ -1,21 +1,17 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import { PHASES, SAGAS, TYPES } from '../data/mcu';
-import { resolvePoster, getApiKey, setApiKey, clearPosterCache } from '../lib/posters';
+import { posterUrl } from '../lib/posters';
 import { formatDate } from '../lib/format';
 import type { McuItem } from '../types';
 
-export type ModalContent =
-  | { kind: 'item'; item: McuItem }
-  | { kind: 'settings' }
-  | { kind: 'audioInfo' };
+export type ModalContent = { kind: 'item'; item: McuItem } | { kind: 'audioInfo' };
 
 interface Props {
   content: ModalContent | null;
   onClose: () => void;
-  onPostersChanged: () => void;
 }
 
-export function Modal({ content, onClose, onPostersChanged }: Props) {
+export function Modal({ content, onClose }: Props) {
   const [active, setActive] = useState<ModalContent | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -56,9 +52,6 @@ export function Modal({ content, onClose, onPostersChanged }: Props) {
         </button>
 
         {active.kind === 'item' && <ItemDetail item={active.item} />}
-        {active.kind === 'settings' && (
-          <SettingsPanel onClose={onClose} onChanged={onPostersChanged} />
-        )}
         {active.kind === 'audioInfo' && <AudioInfo />}
       </div>
     </div>
@@ -67,14 +60,7 @@ export function Modal({ content, onClose, onPostersChanged }: Props) {
 
 function ItemDetail({ item }: { item: McuItem }) {
   const phase = PHASES[item.phase];
-  const [poster, setPoster] = useState<string | null>(null);
-  useEffect(() => {
-    let alive = true;
-    resolvePoster(item).then((u) => alive && setPoster(u));
-    return () => {
-      alive = false;
-    };
-  }, [item]);
+  const poster = posterUrl(item);
 
   return (
     <div className="flex flex-col sm:flex-row" style={{ ['--phase']: phase.color } as CSSProperties}>
@@ -123,60 +109,6 @@ function Fact({ label, value }: { label: string; value: string }) {
     <div>
       <span className="mb-[3px] block text-[11px] uppercase tracking-[1px] text-muted">{label}</span>
       <strong className="text-[15px]">{value}</strong>
-    </div>
-  );
-}
-
-function SettingsPanel({ onClose, onChanged }: { onClose: () => void; onChanged: () => void }) {
-  const [key, setKey] = useState(getApiKey());
-  const save = () => {
-    setApiKey(key);
-    clearPosterCache();
-    onChanged();
-    onClose();
-  };
-  const clear = () => {
-    setApiKey('');
-    clearPosterCache();
-    setKey('');
-    onChanged();
-    onClose();
-  };
-  return (
-    <div className="max-w-[560px] p-[34px]">
-      <h2 className="mb-3 text-[22px] font-bold">Poster reali da TMDB</h2>
-      <p className="text-[14px] leading-[1.55] text-muted">
-        Per mostrare i poster ufficiali serve una API key gratuita di{' '}
-        <strong>The Movie Database</strong>. Registrati su themoviedb.org → Impostazioni → API, e
-        incolla qui la chiave (v3 auth).
-      </p>
-      <label className="mb-1.5 mt-4 block text-[12px] uppercase tracking-[1px] text-muted">
-        API key TMDB
-      </label>
-      <input
-        type="text"
-        value={key}
-        placeholder="es. 1a2b3c4d…"
-        onChange={(e) => setKey(e.target.value)}
-        className="w-full rounded-[10px] border border-white/10 bg-white/5 px-3.5 py-3 text-[14px] text-ink outline-none focus:border-red"
-      />
-      <div className="mt-4 flex gap-2.5">
-        <button
-          onClick={save}
-          className="rounded-[10px] border border-transparent bg-[linear-gradient(180deg,var(--color-redb),var(--color-red))] px-[18px] py-[11px] text-[14px] font-semibold text-white hover:brightness-110"
-        >
-          Salva e ricarica poster
-        </button>
-        <button
-          onClick={clear}
-          className="rounded-[10px] border border-white/10 bg-white/[0.06] px-[18px] py-[11px] text-[14px] font-semibold text-ink hover:bg-white/10"
-        >
-          Rimuovi
-        </button>
-      </div>
-      <p className="mt-3.5 text-[12px] text-muted">
-        Senza chiave l'app funziona comunque con card stilizzate.
-      </p>
     </div>
   );
 }

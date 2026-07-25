@@ -18,7 +18,6 @@ export default function App() {
   const [query, setQuery] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [modal, setModal] = useState<ModalContent | null>(null);
-  const [posterVersion, setPosterVersion] = useState(0);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
   const audio = useAudio();
@@ -162,13 +161,12 @@ export default function App() {
         onQuery={setQuery}
         audio={audio}
         onAudioClick={onAudioClick}
-        onOpenSettings={() => setModal({ kind: 'settings' })}
       />
 
       <main className="flex h-full flex-1 flex-col">
         <div ref={scrollerRef} id="scroller" className="scroller">
           <div className="track">
-            <Timeline rows={rows} view={view} posterVersion={posterVersion} onOpen={openItem} />
+            <Timeline rows={rows} view={view} onOpen={openItem} />
           </div>
         </div>
 
@@ -182,11 +180,7 @@ export default function App() {
         )}
       </main>
 
-      <Modal
-        content={modal}
-        onClose={() => setModal(null)}
-        onPostersChanged={() => setPosterVersion((v) => v + 1)}
-      />
+      <Modal content={modal} onClose={() => setModal(null)} />
     </>
   );
 }
