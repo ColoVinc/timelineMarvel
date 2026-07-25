@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# TODO: sostituire con il dominio reale
-Sitemap: https://REPLACE-WITH-YOUR-DOMAIN/sitemap.xml
+Sitemap: https://mcutimelines.com/sitemap.xml
