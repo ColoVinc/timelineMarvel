@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { TYPES } from '../data/mcu';
 import type { MediaType, ViewMode } from '../types';
 import type { AudioControls } from '../hooks/useAudio';
@@ -32,7 +32,6 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 
 export function Drawer(props: Props) {
   const { open, onClose, view, onView, types, onToggleType, query, onQuery, audio } = props;
-  const [logoError, setLogoError] = useState(false);
 
   return (
     <>
@@ -50,21 +49,13 @@ export function Drawer(props: Props) {
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Intestazione */}
+        {/* Intestazione (titolo originale, non il marchio Marvel) */}
         <div className="relative flex flex-col border-b border-white/10 pb-[18px] leading-none">
-          {logoError ? (
-            <span className="self-start rounded bg-red px-2 pb-0.5 pt-[3px] text-[26px] font-extrabold tracking-[2px] text-white">
-              MARVEL
-            </span>
-          ) : (
-            <img
-              src="/marvel-logo.svg"
-              alt="MARVEL"
-              onError={() => setLogoError(true)}
-              className="h-[34px] w-auto self-start drop-shadow-[0_2px_8px_rgba(230,36,41,0.35)]"
-            />
-          )}
-          <span className="mt-2 text-[10px] tracking-[4px] text-muted">STUDIOS · TIMELINE</span>
+          <div className="flex items-center gap-2.5 self-start">
+            <span className="h-7 w-1 rounded-full bg-red" />
+            <span className="text-[24px] font-extrabold tracking-[3px] text-white">MCU</span>
+          </div>
+          <span className="mt-2.5 text-[11px] tracking-[5px] text-muted">TIMELINE</span>
           <button
             aria-label="Chiudi il menù"
             onClick={onClose}
@@ -157,6 +148,27 @@ export function Drawer(props: Props) {
             />
           </div>
         </Field>
+
+        {/* Disclaimer + attribuzione (in fondo, spinto in basso) */}
+        <div className="mt-auto space-y-2 border-t border-white/10 pt-4 text-[10px] leading-[1.55] text-muted">
+          <p>
+            Progetto fan <strong className="text-ink/80">non ufficiale</strong>. Marvel, MCU e i
+            relativi nomi, loghi e immagini sono proprietà di Marvel/Disney. Questo sito non è
+            affiliato, approvato o sponsorizzato da Marvel o Disney.
+          </p>
+          <p>
+            Dati e poster forniti da{' '}
+            <a
+              href="https://www.themoviedb.org"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-white"
+            >
+              TMDB
+            </a>
+            . Questo prodotto usa le API di TMDB ma non è approvato o certificato da TMDB.
+          </p>
+        </div>
       </aside>
     </>
   );
