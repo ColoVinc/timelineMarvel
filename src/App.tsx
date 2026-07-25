@@ -8,6 +8,7 @@ import { Drawer } from './components/Drawer';
 import { Timeline } from './components/Timeline';
 import { Minimap } from './components/Minimap';
 import { Modal, type ModalContent } from './components/Modal';
+import { StructuredData } from './components/StructuredData';
 import type { MediaType, McuItem, ViewMode } from './types';
 
 const ALL_TYPES: MediaType[] = ['film', 'series', 'animation', 'special'];
@@ -148,6 +149,7 @@ export default function App() {
 
   return (
     <>
+      <StructuredData />
       <Starfield />
       <MenuButton open={menuOpen} onToggle={() => setMenuOpen((o) => !o)} />
       <Drawer
