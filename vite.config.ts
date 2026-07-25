@@ -64,11 +64,15 @@ function prerenderSeo(): Plugin {
   return {
     name: 'prerender-seo',
     transformIndexHtml(html) {
+      // Lo script inline bloccante marca <html class="js"> prima del primo paint:
+      // per gli utenti (JS attivo) il blocco SEO è subito display:none → niente
+      // flash; i crawler senza JS non aggiungono la classe e leggono il contenuto.
+      const head =
+        `  <style>body{margin:0;background:#07070b}.js #prerender{display:none}</style>\n` +
+        `    <script>document.documentElement.classList.add('js')</script>\n` +
+        `    <script type="application/ld+json">${buildJsonLd()}</script>\n  </head>`;
       return html
-        .replace(
-          '</head>',
-          `  <style>body{margin:0;background:#07070b}</style>\n    <script type="application/ld+json">${buildJsonLd()}</script>\n  </head>`,
-        )
+        .replace('</head>', head)
         .replace('<div id="root"></div>', `<div id="root">${buildSeoHtml()}</div>`);
     },
   };
