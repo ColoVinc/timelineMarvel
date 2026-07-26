@@ -55,7 +55,13 @@ export function Card({ item, index, view, onOpen }: Props) {
         <div className="card" ref={cardRef}>
           <div className={`card__poster${poster ? ' has-img' : ''}`}>
             {poster ? (
-              <img src={poster} alt={item.title} className="card__img" />
+              <img
+                src={poster}
+                alt={item.title}
+                className="card__img"
+                loading="lazy"
+                decoding="async"
+              />
             ) : (
               <div className="card__fallback">
                 <span className="card__fallback-type">{t.label}</span>
