@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, type CSSProperties } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Stone } from '../data/stones';
@@ -67,28 +67,22 @@ function Gem({ stone }: { stone: Stone }) {
   );
 }
 
-// Gemma dell'Infinito 3D in-flow (scorre con la timeline). Bagliore e
-// fluttuazione sono in CSS attorno al canvas.
+// Solo il canvas 3D: il contenitore `.infinity-stone` (bagliore e fluttuazione
+// in CSS) vive in Markers.tsx, che monta questo componente quando la gemma
+// entra nel viewport e lo smonta quando esce, liberando il contesto WebGL.
 export function InfinityStone({ stone }: { stone: Stone }) {
   return (
-    <div
-      className="infinity-stone"
-      style={{ ['--stone']: stone.color, ['--stone-core']: stone.core } as CSSProperties}
-      title={stone.name}
-      aria-hidden="true"
+    <Canvas
+      dpr={[1, 2]}
+      camera={{ position: [0, 0, 3.3], fov: 45 }}
+      gl={{ alpha: true, antialias: true }}
     >
-      <Canvas
-        dpr={[1, 2]}
-        camera={{ position: [0, 0, 3.3], fov: 45 }}
-        gl={{ alpha: true, antialias: true }}
-      >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[2.5, 2.5, 3]} intensity={2.2} />
-        <pointLight position={[-2, -1, 1.5]} intensity={1} color={stone.color} />
-        {/* Luce interna colorata: illumina le facce dall'interno */}
-        <pointLight position={[0, 0, 0]} intensity={1.6} distance={3} color={stone.core} />
-        <Gem stone={stone} />
-      </Canvas>
-    </div>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[2.5, 2.5, 3]} intensity={2.2} />
+      <pointLight position={[-2, -1, 1.5]} intensity={1} color={stone.color} />
+      {/* Luce interna colorata: illumina le facce dall'interno */}
+      <pointLight position={[0, 0, 0]} intensity={1.6} distance={3} color={stone.core} />
+      <Gem stone={stone} />
+    </Canvas>
   );
 }
