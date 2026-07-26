@@ -1,0 +1,17 @@
+# Header serviti da Cloudflare Pages (file letto in automatico dalla root di dist)
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+
+# Asset con hash nel nome: cambiano nome a ogni build, cache lunghissima
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Asset a nome fisso: una settimana, poi ricontrolla
+/favicon.svg
+  Cache-Control: public, max-age=604800
+/og-image.png
+  Cache-Control: public, max-age=604800
